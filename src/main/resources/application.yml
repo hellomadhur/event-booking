@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    generate-unique-name: false
+    name: eventbooking  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
