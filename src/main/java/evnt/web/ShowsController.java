@@ -1,6 +1,8 @@
 package evnt.web;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import evnt.domain.Event;
-import evnt.domain.EventPlace;
 import evnt.domain.ShowTiming;
-import evnt.repo.EventPlaceRepo;
 import evnt.repo.EventRepo;
 import evnt.repo.ShowTimingRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -26,24 +26,26 @@ import lombok.extern.slf4j.Slf4j;
 public class ShowsController {
 
 	private EventRepo eventRepo;
-	private EventPlaceRepo eventPlaceRepo;
 	private ShowTimingRepo showTimingRepo;
 	
 	
 	@Autowired
-	public ShowsController(EventRepo eventRepo, EventPlaceRepo eventPlaceRepo, ShowTimingRepo showTimingRepo) {
+	public ShowsController(EventRepo eventRepo, ShowTimingRepo showTimingRepo) {
 		this.eventRepo = eventRepo;
-		this.eventPlaceRepo = eventPlaceRepo;
 		this.showTimingRepo = showTimingRepo;
 	}
 
 	@GetMapping
 	@ResponseBody
 	public Map<String, List<String>> getShows(
-			@RequestParam String movie, 
-			@RequestParam String date,
-			@RequestParam String city){
+			@RequestParam(defaultValue = "null") String movie, 
+			@RequestParam(defaultValue = "null") String date,
+			@RequestParam(defaultValue = "null") String city){
 		
+		if(movie.equals("null") || date.equals("null") || city.equals("null")) {
+			
+			return Collections.singletonMap("Message", Arrays.asList("Movie or Date or City is Not Specified"));
+		}
 		Event event = eventRepo.findByNameIgnoringCase(movie);
 		
 		 List<ShowTiming> showsList = showTimingRepo.findByEventAndShowDate(event, date);
@@ -54,7 +56,7 @@ public class ShowsController {
 		 
 		 for (ShowTiming show : showsList) {
 			
-			 if(show.getEventPlace().getCity().equalsIgnoreCase(city)) {
+			 if(city!=null && city.equalsIgnoreCase(show.getEventPlace().getCity()) ) {
 				 
 				 eventPlaceName = show.getEventPlace().getName();
 				 listTimeSlots  = showMap.get(eventPlaceName);
