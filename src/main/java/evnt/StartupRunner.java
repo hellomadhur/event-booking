@@ -2,7 +2,6 @@ package evnt;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Random;
 
 import org.springframework.boot.ApplicationArguments;
@@ -15,9 +14,7 @@ import evnt.domain.ShowTiming;
 import evnt.repo.EventPlaceRepo;
 import evnt.repo.EventRepo;
 import evnt.repo.ShowTimingRepo;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 public class StartupRunner implements ApplicationRunner {
 
@@ -41,36 +38,36 @@ public class StartupRunner implements ApplicationRunner {
 
 	}
 	
-public void populateShowTimings() {
-		
-		Iterable<Event> eventList = eventRepo.findAll();
-		Iterable<EventPlace> eventPlaceList = eventPlaceRepo.findAll();
-				
-		ShowTiming show;
-		DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
-		LocalDateTime now = LocalDateTime.now();
-		String[] showTimes = {"10:00 am", "1:30 pm", "5:00 pm", "9:00 pm"};
-		int screenNumber = 1;
-		Random random = new Random();
-		String showDate;
-		
-		for(int i=1;i<8;i++) {
-			for (Event event : eventList) {
-				
-				showDate = dtFormatter.format(now.plusDays(i)).toString();
-				for (EventPlace eventPlace : eventPlaceList) {
+	public void populateShowTimings() {
+			
+			Iterable<Event> eventList = eventRepo.findAll();
+			Iterable<EventPlace> eventPlaceList = eventPlaceRepo.findAll();
 					
-					for(String time : showTimes) {
+			ShowTiming show;
+			DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
+			LocalDateTime now = LocalDateTime.now();
+			String[] showTimes = {"10:00 am", "1:30 pm", "5:00 pm", "9:00 pm"};
+			int screenNumber = 1;
+			Random random = new Random();
+			String showDate;
+			
+			for(int i=1;i<8;i++) {
+				for (Event event : eventList) {
+					
+					showDate = dtFormatter.format(now.plusDays(i)).toString();
+					for (EventPlace eventPlace : eventPlaceList) {
 						
-						if(random.nextInt(50) % 2 == 0){
-							String screenName = "Screen "+screenNumber;
-							show = new ShowTiming(null, time, showDate, screenName, true, event, eventPlace);
-							showTimingRepo.save(show);
+						for(String time : showTimes) {
+							
+							if(random.nextInt(50) % 2 == 0){
+								String screenName = "Screen "+screenNumber;
+								show = new ShowTiming(null, time, showDate, screenName, true, event, eventPlace);
+								showTimingRepo.save(show);
+							}
 						}
 					}
+					screenNumber++;
 				}
-				screenNumber++;
 			}
 		}
-	}
 }
