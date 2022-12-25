@@ -52,22 +52,25 @@ public void populateShowTimings() {
 		String[] showTimes = {"10:00 am", "1:30 pm", "5:00 pm", "9:00 pm"};
 		int screenNumber = 1;
 		Random random = new Random();
-		for (Event event : eventList) {
-			
-			String showDate = dtFormatter.format(now.plusDays(3)).toString();
-			for (EventPlace eventPlace : eventPlaceList) {
+		String showDate;
+		
+		for(int i=1;i<8;i++) {
+			for (Event event : eventList) {
 				
-				for(String time : showTimes) {
+				showDate = dtFormatter.format(now.plusDays(i)).toString();
+				for (EventPlace eventPlace : eventPlaceList) {
 					
-					if(random.nextInt(50) % 2 == 0){
-						String screenName = "Screen "+screenNumber;
-						show = new ShowTiming(null, time, showDate, screenName, true, event, eventPlace);
-						showTimingRepo.save(show);
+					for(String time : showTimes) {
+						
+						if(random.nextInt(50) % 2 == 0){
+							String screenName = "Screen "+screenNumber;
+							show = new ShowTiming(null, time, showDate, screenName, true, event, eventPlace);
+							showTimingRepo.save(show);
+						}
 					}
-					
 				}
+				screenNumber++;
 			}
-			screenNumber++;
 		}
 	}
 }
