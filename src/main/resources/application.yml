@@ -4,4 +4,4 @@ spring:
     name: eventbooking  
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
