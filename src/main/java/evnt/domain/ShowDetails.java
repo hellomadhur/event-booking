@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Entity(name = "SHOW_TIMING")
+@Entity(name = "SHOW_DETAILS")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"show_date","start_time","event_id","event_place_id"}))
-public class ShowTiming {
+public class ShowDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

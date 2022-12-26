@@ -1,6 +1,5 @@
 package evnt.web;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -38,7 +37,7 @@ public class BookingController {
 		
 		
 		if(booking.getUser() == null 
-				|| booking.getShowTiming() == null
+				|| booking.getShowDetails() == null
 				|| booking.getSeatNumber() == null)
 		{
 			
@@ -61,7 +60,7 @@ public class BookingController {
 		StringBuilder message = new StringBuilder("Not Booked :( [ ");
 		
 		if(booking.getUser() == null) message.append("User is null, ");
-		if(booking.getShowTiming() == null) message.append("Show Timing is null, ");
+		if(booking.getShowDetails() == null) message.append("Show Timing is null, ");
 		if(booking.getSeatNumber() == null) message.append("Seat Number is null ]");
 		
 		return message.toString();
@@ -90,15 +89,15 @@ public class BookingController {
 		
 		mapMessage.put("Message", booking.getMessage());
 		mapMessage.put("Name", booking.getUser().getName());
-		Event.Type eventType = booking.getShowTiming().getEvent().getType();
-		mapMessage.put(eventType.toString(), booking.getShowTiming().getEvent().getName());
-		EventPlace.Type eventPlaceType = booking.getShowTiming().getEventPlace().getType();
-		mapMessage.put(eventPlaceType.toString(), booking.getShowTiming().getEventPlace().getName());
+		Event.Type eventType = booking.getShowDetails().getEvent().getType();
+		mapMessage.put(eventType.toString(), booking.getShowDetails().getEvent().getName());
+		EventPlace.Type eventPlaceType = booking.getShowDetails().getEventPlace().getType();
+		mapMessage.put(eventPlaceType.toString(), booking.getShowDetails().getEventPlace().getName());
 		mapMessage.put("Seats", booking.getSeatNumber());
-		mapMessage.put("Date", booking.getShowTiming().getShowDate());
-		mapMessage.put("Time", booking.getShowTiming().getStartTime());
-		mapMessage.put("Screen Name", booking.getShowTiming().getScreenName());
-		mapMessage.put("City", booking.getShowTiming().getEventPlace().getCity());
+		mapMessage.put("Date", booking.getShowDetails().getShowDate());
+		mapMessage.put("Time", booking.getShowDetails().getStartTime());
+		mapMessage.put("Screen Name", booking.getShowDetails().getScreenName());
+		mapMessage.put("City", booking.getShowDetails().getEventPlace().getCity());
 		
 		return mapMessage;
 	}
