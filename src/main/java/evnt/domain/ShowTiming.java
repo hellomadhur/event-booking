@@ -36,7 +36,9 @@ public class ShowTiming {
 	@Column(name = "show_date", nullable = false)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private final String showDate;
-	private final String screenNumber;
+	
+	@Column(name = "screen_name", nullable = false)
+	private final String screenName;
 	
 	@Column(nullable = false)
 	private final boolean isActive;

@@ -12,3 +12,6 @@ VALUES('Saket', 'Delhi', 'India', 'Delhi', 'Multiplex', true, 'maplocation', 'Ci
 
 INSERT INTO EVENT_PLACE(address, city, country, state, description, is_active, map_location, name, phone_number, type, zip)
 VALUES('CP', 'Delhi', 'India', 'Delhi', 'Multiplex', true, 'maplocation', 'Cineplex: cp', 9876543210, 'THEATRE', 110001);
+
+INSERT INTO USER_INFO(name, email, dob, is_active) VALUES('Madhur', 'madhur@gmail.com','12-11-1981',true);
+INSERT INTO USER_INFO(name, email, dob, is_active) VALUES('Manu', 'manu@gmail.com','07-08-1982',true);
