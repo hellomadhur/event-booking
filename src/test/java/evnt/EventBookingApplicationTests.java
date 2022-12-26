@@ -1,10 +1,10 @@
-package mov;
+package evnt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MovieBookingApplicationTests {
+class EventBookingApplicationTests {
 
 	@Test
 	void contextLoads() {
