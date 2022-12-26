@@ -68,7 +68,6 @@ public class BookingController {
 	
 	private String getBookingConfirmation(Booking booking) {
 		
-		
 		booking.setIsActive(true);
 		
 		try {
@@ -82,6 +81,7 @@ public class BookingController {
 		
 		return BOOKING_SUCCESSFUL;
 	}
+	
 	
 	private Map<String,String> buildResponseMap(Booking booking){
 		
