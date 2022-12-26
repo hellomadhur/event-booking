@@ -38,9 +38,9 @@ public class Booking {
 	private final User user;
 	
 	@NotNull
-	@JoinColumn(name = "show_timing_id")
+	@JoinColumn(name = "show_details_id")
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
-	private final ShowTiming showTiming;
+	private final ShowDetails showDetails;
 	
 	@Column(nullable = false)
 	private Boolean isActive;

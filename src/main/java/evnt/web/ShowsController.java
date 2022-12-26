@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import evnt.domain.Event;
-import evnt.domain.ShowTiming;
+import evnt.domain.ShowDetails;
 import evnt.repo.EventRepo;
-import evnt.repo.ShowTimingRepo;
+import evnt.repo.ShowDetailsRepo;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,13 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ShowsController {
 
 	private EventRepo eventRepo;
-	private ShowTimingRepo showTimingRepo;
+	private ShowDetailsRepo showDetailsRepo;
 	
 	
 	@Autowired
-	public ShowsController(EventRepo eventRepo, ShowTimingRepo showTimingRepo) {
+	public ShowsController(EventRepo eventRepo, ShowDetailsRepo showDetailsRepo) {
 		this.eventRepo = eventRepo;
-		this.showTimingRepo = showTimingRepo;
+		this.showDetailsRepo = showDetailsRepo;
 	}
 
 	@GetMapping
@@ -63,9 +63,9 @@ public class ShowsController {
 		String eventPlaceName;	
 	 
 		Event event = eventRepo.findByNameIgnoringCase(movie);
-		List<ShowTiming> showsList = showTimingRepo.findByEventAndShowDate(event, date);
+		List<ShowDetails> showsList = showDetailsRepo.findByEventAndShowDate(event, date);
 			 
-		 for (ShowTiming show : showsList) {
+		 for (ShowDetails show : showsList) {
 			
 			 if(city!=null && city.equalsIgnoreCase(show.getEventPlace().getCity()) ) {
 				 
