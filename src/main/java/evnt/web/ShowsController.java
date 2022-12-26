@@ -18,6 +18,7 @@ import evnt.domain.Event;
 import evnt.domain.ShowTiming;
 import evnt.repo.EventRepo;
 import evnt.repo.ShowTimingRepo;
+import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,14 +47,24 @@ public class ShowsController {
 			
 			return Collections.singletonMap("Message", Arrays.asList("Movie or Date or City is Not Specified"));
 		}
-		Event event = eventRepo.findByNameIgnoringCase(movie);
 		
-		 List<ShowTiming> showsList = showTimingRepo.findByEventAndShowDate(event, date);
+		Map<String, List<String>> showMap;
 		 
-		 Map<String, List<String>> showMap = new HashMap<>();
-		 List<String> listTimeSlots;
-		 String eventPlaceName;
-		 
+		showMap = getShowsMapForMovie(movie, date, city);
+		
+		log.info("List: {}", showMap);
+		return showMap;
+	}
+	
+	private Map<String, List<String>> getShowsMapForMovie(String movie, String date, String city){
+		
+		Map<String, List<String>> showMap = new HashMap<>();
+		List<String> listTimeSlots;
+		String eventPlaceName;	
+	 
+		Event event = eventRepo.findByNameIgnoringCase(movie);
+		List<ShowTiming> showsList = showTimingRepo.findByEventAndShowDate(event, date);
+			 
 		 for (ShowTiming show : showsList) {
 			
 			 if(city!=null && city.equalsIgnoreCase(show.getEventPlace().getCity()) ) {
@@ -70,8 +81,6 @@ public class ShowsController {
 				 showMap.put(eventPlaceName, listTimeSlots);
 			 }
 		 }
-
-		 log.info("List: {}", showMap);
-		return showMap;
+		 return showMap;
 	}
 }
