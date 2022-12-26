@@ -11,9 +11,6 @@ import evnt.domain.ShowDetails;
 @Repository
 public interface ShowDetailsRepo extends CrudRepository<ShowDetails, Long>{
 
-//	public List<ShowTimings> findByEventIdAndCountryAndStateAndCityPlacedAtEquals(
-//			long eventId, String country, String state, String city, Date date);
-	
 	public List<ShowDetails> findByEvent(Event event);
 	public List<ShowDetails> findByShowDate(String date);
 	public List<ShowDetails> findByEventAndShowDate(Event event, String showDate);

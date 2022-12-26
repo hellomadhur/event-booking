@@ -18,7 +18,6 @@ import evnt.domain.Event;
 import evnt.domain.ShowDetails;
 import evnt.repo.EventRepo;
 import evnt.repo.ShowDetailsRepo;
-import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
