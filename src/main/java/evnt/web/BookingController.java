@@ -1,5 +1,6 @@
 package evnt.web;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,6 +21,10 @@ public class BookingController {
 
 	private static final String BOOKING_SUCCESSFUL = "BOOKING SUCCESSFUL";
 	private static final String BOOKING_FAILED = "BOOKING FAILED";
+	private static final String NOT_BOOKED = "NOT BOOKED";
+	private static final String USER_NULL = "user IS NULL";
+	private static final String SHOW_DETAILS_NULL = "showDetails IS NULL";
+	private static final String SEAT_NUMBER_NULL = "seatNumber IS NULL";
 	
 	private final BookingRepo bookingRepo;
 	
@@ -34,34 +39,36 @@ public class BookingController {
 	public Map<String, String> bookTickets(Booking booking) {
 		
 		String bookingMessage;
+		Map<String, String> mapMessage;
 		
-		
-		if(booking.getUser() == null 
+		if(booking == null || booking.getUser() == null 
 				|| booking.getShowDetails() == null
 				|| booking.getSeatNumber() == null)
 		{
-			
 			bookingMessage = buildErrorMessage(booking);
+			
+			mapMessage = new HashMap<>();
+			mapMessage.put("Message", bookingMessage);
 			
 		}else {
 			
 			bookingMessage = getBookingConfirmation(booking);
+			booking.setMessage(bookingMessage);
+			mapMessage = buildResponseMap(booking);
 		}
-		
-		booking.setMessage(bookingMessage);
-		
-		Map<String, String> mapMessage = buildResponseMap(booking);
 		
 		return mapMessage;
 	}
 	
 	private String buildErrorMessage(Booking booking) {
 		
-		StringBuilder message = new StringBuilder("Not Booked :( [ ");
+		StringBuilder message = new StringBuilder(NOT_BOOKED).append(" [");
 		
-		if(booking.getUser() == null) message.append("User is null, ");
-		if(booking.getShowDetails() == null) message.append("Show Timing is null, ");
-		if(booking.getSeatNumber() == null) message.append("Seat Number is null ]");
+		if(booking.getUser() == null) message.append(USER_NULL).append(", ");
+		if(booking.getShowDetails() == null) message.append(SHOW_DETAILS_NULL).append(", ");
+		if(booking.getSeatNumber() == null) message.append(SEAT_NUMBER_NULL);
+		
+		message.append("]");
 		
 		return message.toString();
 	}
